@@ -1,6 +1,15 @@
 import { Button } from "@/components/ui/button";
+import useInfinityImages from "@/hooks/queries/useInfiniteImages";
+import useInfiniteScrollObserver from "@/hooks/useInfiniteScrollObserver";
+import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 
 export default function Home() {
+  const {
+    data: iamgesData,
+    fetchNextPage,
+    isFetchingNextPage,
+  } = useInfinityImages({ per_page: 20, page: 3 });
+  const observerRef = useInfiniteScrollObserver(fetchNextPage, isFetchingNextPage);
   return (
     <div className="w-full">
       {/* 필터 탭 섹션 */}
@@ -20,6 +29,27 @@ export default function Home() {
           </Button>
           <Button className="h-full flex-1 rounded-[100px]">인기</Button>
         </div>
+      </section>
+      {/* 이미지 콘텐츠 */}
+      <section className="w-full relative">
+        <ResponsiveMasonry columnsCountBreakPoints={{ 0: 1, 768: 2, 1024: 3, 1280: 4 }}>
+          <Masonry gutter="24px">
+            {iamgesData?.pages.map((images) =>
+              images.hits.map((image) => (
+                <img key={image.id} src={image.webformatURL} alt="사진" className="w-full" />
+              ))
+            )}
+          </Masonry>
+        </ResponsiveMasonry>
+        <div ref={observerRef} className="h-[1px]" />
+        {/*  <div
+          className="absolute bottom-0 w-full h-[650px] bg-white pointer-events-none"
+          style={{
+            maskImage: "linear-gradient(to bottom, transparent 0px, transparent 30px, black 130px)",
+            WebkitMaskImage:
+              "linear-gradient(to bottom, transparent 0px, transparent 30px, black 130px)",
+          }}
+        /> */}
       </section>
     </div>
   );
