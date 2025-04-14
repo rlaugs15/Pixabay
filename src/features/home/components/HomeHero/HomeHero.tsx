@@ -110,7 +110,7 @@ export default function HomeHero() {
         </section>
         <section className="flex gap-1">
           {recommWords.map((word) => (
-            <Button variant="ghost" size="sm">
+            <Button variant="ghost" size="sm" className="bg-black/30 backdrop-blur-md">
               {word}
             </Button>
           ))}
