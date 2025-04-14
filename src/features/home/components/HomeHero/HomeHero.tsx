@@ -9,6 +9,8 @@ import { Input } from "@/components/ui/input";
 import MobilePixabayLogo from "@/components/logos/MobilePixabayLogo";
 import WebPixabayLogo from "@/components/logos/WebPixabayLogo";
 import useImages from "@/hooks/queries/useImages";
+import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
 
 const btnTexts = ["둘러보기", "사진", "일러스트", "백터", "비디오", "음악", "음향 효과", "GIF"];
 const recommWords = [
@@ -29,8 +31,7 @@ const recommWords = [
 ];
 
 export default function HomeHero() {
-  const { data: imagesData, isFetching: imagesFetching } = useImages({ per_page: 5 });
-  console.log("data", imagesData);
+  const { data: imagesData } = useImages({ per_page: 15 });
 
   const form = useForm<z.infer<typeof searchSchema>>({
     resolver: zodResolver(searchSchema),
@@ -45,10 +46,22 @@ export default function HomeHero() {
   return (
     <div className="relative p-4 pb-12 lg:pb-28">
       <article className="absolute left-0 top-0 w-full h-full bg-black/80 -z-10">
-        <img
-          src="https://cdn.pixabay.com/photo/2024/12/18/10/10/tree-9274973_1280.png"
-          className="w-full h-full object-cover object-center"
-        />
+        <Carousel
+          plugins={[Autoplay({ delay: 3000, stopOnInteraction: true })]}
+          className="w-full h-full overflow-hidden"
+        >
+          <CarouselContent>
+            {imagesData?.hits.map((image) => (
+              <CarouselItem key={image.id}>
+                <img
+                  src={image.largeImageURL}
+                  alt={`slide-${image.id}`}
+                  className="w-full h-auto object-cover object-center"
+                />
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+        </Carousel>
         <div className="absolute inset-0 bg-black/30" />
       </article>
       <header className="w-full flex justify-between gap-3 items-center h-10 mb-7">
