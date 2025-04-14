@@ -1,6 +1,6 @@
 import { SVGProps } from "react";
 
-export default function PixabayLogo(props: SVGProps<SVGSVGElement>) {
+export default function MobilePixabayLogo(props: SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
       <path
