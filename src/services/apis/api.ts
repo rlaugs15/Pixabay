@@ -22,6 +22,8 @@ class API {
     image_type,
     orientation,
     category,
+    page,
+    per_page,
   }: ImagesParams): Promise<ImagesResponse> {
     const res = await this.instance.get(BASE_URL, {
       params: {
@@ -30,6 +32,8 @@ class API {
         image_type,
         orientation,
         category,
+        page,
+        per_page,
       },
     });
     return res.data;
