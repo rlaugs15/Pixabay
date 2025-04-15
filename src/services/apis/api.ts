@@ -2,8 +2,8 @@ import axios, { AxiosInstance } from "axios";
 import { ImagesParams, ImagesResponse } from "./types/imageApi";
 import { VideosParams, VideosResponse } from "./types/videoApi";
 
-const BASE_URL = "https://pixabay.com/api";
-const VIDEO_BASE_URL = "https://pixabay.com/api/videos";
+const BASE_URL = "/api/images";
+const VIDEO_BASE_URL = "/api/videos";
 const API_KEY = import.meta.env.VITE_PIXABAY_API_KEY;
 
 class API {
@@ -24,7 +24,8 @@ class API {
     category,
     page,
     per_page,
-    order = true,
+    editors_choice = true,
+    order,
   }: ImagesParams): Promise<ImagesResponse> {
     const res = await this.instance.get(BASE_URL, {
       params: {
@@ -35,6 +36,7 @@ class API {
         category,
         page,
         per_page,
+        editors_choice,
         order,
       },
     });

@@ -10,6 +10,7 @@ export default function useInfiniteImages({
   category,
   page,
   per_page,
+  editors_choice = true,
   order,
 }: Partial<ImagesParams> = {}) {
   return useInfiniteQuery({
@@ -20,10 +21,11 @@ export default function useInfiniteImages({
       category,
       page,
       per_page,
+      editors_choice,
       order,
     }),
     queryFn: ({ pageParam }) =>
-      api.getImages({ query, image_type, orientation, category, ...pageParam, per_page }),
+      api.getImages({ query, image_type, orientation, category, ...pageParam, per_page, order }),
     initialPageParam: { page: 1 },
     getNextPageParam: (_, __, firstPageParam) => {
       const { page } = firstPageParam;
