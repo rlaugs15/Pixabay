@@ -25,6 +25,7 @@ export interface ImagesParams {
     | "music";
   page?: number; //기본값 1
   per_page?: number; //기본값 20
+  order?: boolean;
 }
 
 export interface Image {

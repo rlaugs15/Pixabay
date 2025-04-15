@@ -24,6 +24,7 @@ class API {
     category,
     page,
     per_page,
+    order = true,
   }: ImagesParams): Promise<ImagesResponse> {
     const res = await this.instance.get(BASE_URL, {
       params: {
@@ -34,6 +35,7 @@ class API {
         category,
         page,
         per_page,
+        order,
       },
     });
     return res.data;

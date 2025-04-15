@@ -1,15 +1,23 @@
 import { Button } from "@/components/ui/button";
-import useInfinityImages from "@/hooks/queries/useInfiniteImages";
+import useInfiniteImages from "@/hooks/queries/useInfiniteImages";
 import useInfiniteScrollObserver from "@/hooks/useInfiniteScrollObserver";
+import { useLayoutEffect } from "react";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
+import { useSearchParams } from "react-router-dom";
 
 export default function Home() {
+  const [searchParams, setSearchParams] = useSearchParams();
   const {
     data: iamgesData,
     fetchNextPage,
     isFetchingNextPage,
-  } = useInfinityImages({ per_page: 20, page: 3 });
+  } = useInfiniteImages({ per_page: 20, page: 3 });
   const observerRef = useInfiniteScrollObserver(fetchNextPage, isFetchingNextPage);
+
+  useLayoutEffect(() => {
+    searchParams.set("order", "ec");
+    setSearchParams(searchParams);
+  }, []);
   return (
     <div className="w-full">
       {/* 필터 탭 섹션 */}
@@ -21,13 +29,6 @@ export default function Home() {
           </h2>
         </div>
         <div className="w-full sm:w-[254px] h-10 flex gap-1 p-1 rounded-[100px] bg-zinc-950/5">
-          <Button variant="ghost" className="h-full flex-1 rounded-[100px]">
-            편집자 선정
-          </Button>
-          <Button variant="ghost" className="h-full flex-1 rounded-[100px]">
-            최신순
-          </Button>
-          <Button className="h-full flex-1 rounded-[100px]">인기</Button>
         </div>
       </section>
       {/* 이미지 콘텐츠 */}
@@ -42,7 +43,7 @@ export default function Home() {
           </Masonry>
         </ResponsiveMasonry>
         <div ref={observerRef} className="h-[1px]" />
-        {/*  <div
+        {/* <div
           className="absolute bottom-0 w-full h-[650px] bg-white pointer-events-none"
           style={{
             maskImage: "linear-gradient(to bottom, transparent 0px, transparent 30px, black 130px)",
