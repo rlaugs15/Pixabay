@@ -1,23 +1,60 @@
-import { Button } from "@/components/ui/button";
+import FillterButton from "@/features/home/components/FillterButton";
 import useInfiniteImages from "@/hooks/queries/useInfiniteImages";
+import useInfiniteVideos from "@/hooks/queries/useInfiniteVideos";
 import useInfiniteScrollObserver from "@/hooks/useInfiniteScrollObserver";
-import { useLayoutEffect } from "react";
+import { useQueryParamsStore } from "@/store/queryStore";
+import { useEffect } from "react";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import { useSearchParams } from "react-router-dom";
 
 export default function Home() {
   const [searchParams, setSearchParams] = useSearchParams();
+  const { order, type, initFromSearchParams, setOrder } = useQueryParamsStore();
+
+  useEffect(() => {
+    initFromSearchParams(searchParams);
+  }, [searchParams]);
+
+  const editors_choiceValue = order !== "latest" && order !== "popular";
+  const orderValue = order !== "ec" ? order : undefined;
+  const isVideo = type === "video";
+
+  /* 이미지 패칭 */
   const {
     data: iamgesData,
-    fetchNextPage,
-    isFetchingNextPage,
-  } = useInfiniteImages({ per_page: 20, page: 3 });
+    fetchNextPage: imagesFetchNextPage,
+    isFetchingNextPage: isImagesFetchingNextPage,
+  } = useInfiniteImages({
+    per_page: 20,
+    page: 3,
+    editors_choice: !editors_choiceValue,
+    order: orderValue,
+  });
+
+  /* 비디오 패칭 */
+  const {
+    data: videosData,
+    fetchNextPage: videosFetchNextPage,
+    isFetchingNextPage: isVideosFetchingNextPage,
+  } = useInfiniteVideos({
+    per_page: 20,
+    page: 3,
+    editors_choice: !editors_choiceValue,
+    order: orderValue,
+  });
+
+  const data = isVideo ? videosData : iamgesData;
+  const fetchNextPage = isVideo ? videosFetchNextPage : imagesFetchNextPage;
+  const isFetchingNextPage = isVideo ? isVideosFetchingNextPage : isImagesFetchingNextPage;
+
   const observerRef = useInfiniteScrollObserver(fetchNextPage, isFetchingNextPage);
 
-  useLayoutEffect(() => {
-    searchParams.set("order", "ec");
-    setSearchParams(searchParams);
-  }, []);
+  const setOrderParmasClick = (value: "ec" | "latest" | "popular") => {
+    const newParams = new URLSearchParams(searchParams);
+    newParams.set("order", value);
+    setSearchParams(newParams);
+    setOrder(value);
+  };
   return (
     <div className="w-full">
       {/* 필터 탭 섹션 */}
@@ -29,28 +66,40 @@ export default function Home() {
           </h2>
         </div>
         <div className="w-full sm:w-[254px] h-10 flex gap-1 p-1 rounded-[100px] bg-zinc-950/5">
+          <FillterButton
+            fillterValue="ec"
+            text="편집자 선정"
+            setOrderParmasClick={setOrderParmasClick}
+          />
+          <FillterButton
+            fillterValue="latest"
+            text="최신순"
+            setOrderParmasClick={setOrderParmasClick}
+          />
+          <FillterButton
+            fillterValue="popular"
+            text="인기"
+            setOrderParmasClick={setOrderParmasClick}
+          />
         </div>
       </section>
-      {/* 이미지 콘텐츠 */}
+      {/* 콘텐츠 */}
       <section className="w-full relative">
         <ResponsiveMasonry columnsCountBreakPoints={{ 0: 1, 768: 2, 1024: 3, 1280: 4 }}>
           <Masonry gutter="24px">
-            {iamgesData?.pages.map((images) =>
-              images.hits.map((image) => (
-                <img key={image.id} src={image.webformatURL} alt="사진" className="w-full" />
+            {data?.pages.map((contents) =>
+              contents.hits.map((content) => (
+                <img
+                  key={content.id}
+                  src={isVideo ? content.videos.tiny.thumbnail : content.webformatURL}
+                  alt="썸네일"
+                  className="w-full"
+                />
               ))
             )}
           </Masonry>
         </ResponsiveMasonry>
         <div ref={observerRef} className="h-[1px]" />
-        {/* <div
-          className="absolute bottom-0 w-full h-[650px] bg-white pointer-events-none"
-          style={{
-            maskImage: "linear-gradient(to bottom, transparent 0px, transparent 30px, black 130px)",
-            WebkitMaskImage:
-              "linear-gradient(to bottom, transparent 0px, transparent 30px, black 130px)",
-          }}
-        /> */}
       </section>
     </div>
   );

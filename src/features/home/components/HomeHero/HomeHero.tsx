@@ -1,16 +1,18 @@
 import { Button } from "@/components/ui/button";
-import { FaBars, FaBell, FaUser } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod/src/zod.js";
 import { searchSchema } from "@/services/schemas/searchSchema";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import MobilePixabayLogo from "@/components/logos/MobilePixabayLogo";
-import WebPixabayLogo from "@/components/logos/WebPixabayLogo";
+
 import useImages from "@/hooks/queries/useImages";
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
+import MainHeader from "../MainHeader";
+import { useSearchParams } from "react-router-dom";
+import { useQueryParamsStore } from "@/store/queryStore";
+import TypeButton from "./TypeButton";
 
 const btnTexts = ["둘러보기", "사진", "일러스트", "백터", "비디오", "음악", "음향 효과", "GIF"];
 const recommWords = [
@@ -31,7 +33,23 @@ const recommWords = [
 ];
 
 export default function HomeHero() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const setType = useQueryParamsStore((state) => state.setType);
+
   const { data: imagesData } = useImages({ per_page: 15 });
+
+  const setTypeParamsClick = (value: string) => {
+    const newParams = new URLSearchParams(searchParams);
+    if (value === "비디오") {
+      newParams.set("type", "video");
+      setSearchParams(newParams);
+      setType("video");
+    } else {
+      newParams.set("type", "image");
+      setSearchParams(newParams);
+      setType("image");
+    }
+  };
 
   const form = useForm<z.infer<typeof searchSchema>>({
     resolver: zodResolver(searchSchema),
@@ -64,28 +82,12 @@ export default function HomeHero() {
         </Carousel>
         <div className="absolute inset-0 bg-black/30" />
       </article>
-      <header className="w-full flex justify-between gap-3 items-center h-10 mb-7">
-        <MobilePixabayLogo className="aspect-square h-full block sm:hidden" />
-        <WebPixabayLogo className="hidden sm:block sm:h-full sm:p-1" />
-        <section className="flex gap-1">
-          <Button variant="ghost" className="rounded-full w-10 h-10">
-            <FaBell />
-          </Button>
-          <Button variant="ghost" className="rounded-full w-10 h-10">
-            <FaUser />
-          </Button>
-          <Button variant="ghost" className="rounded-full w-10 h-10">
-            <FaBars className="aspect-square h-full" />
-          </Button>
-        </section>
-      </header>
+      <MainHeader />
       <div className="w-full flex flex-col gap-4 text-white items-center">
         <h1 className="hidden lg:block font-bold text-3xl">놀라운 무료 이미지</h1>
         <section className="w-full text-sm font-semibold flex justify-center">
-          {btnTexts.map((btn) => (
-            <Button variant="ghost" className="rounded-3xl">
-              {btn}
-            </Button>
+          {btnTexts.map((text) => (
+            <TypeButton key={text} text={text} setTypeParamsClick={setTypeParamsClick} />
           ))}
         </section>
         <section className="w-full max-w-205">
@@ -110,7 +112,7 @@ export default function HomeHero() {
         </section>
         <section className="flex gap-1">
           {recommWords.map((word) => (
-            <Button variant="ghost" size="sm" className="bg-black/30 backdrop-blur-md">
+            <Button key={word} variant="ghost" size="sm" className="bg-black/30 backdrop-blur-md">
               {word}
             </Button>
           ))}
