@@ -1,25 +1,23 @@
-import { ImagesParams } from "@/services/apis/types/imageApi";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { imageKeys } from "./queryKeys";
+import { videoKeys } from "./queryKeys";
 import api from "@/services/apis/api";
+import { VideosParams } from "@/services/apis/types/videoApi";
 import { useQueryParamsStore } from "@/store/queryStore";
 
-export default function useInfiniteImages({
+export default function useInfiniteVideos({
   query,
-  image_type,
-  orientation,
+  video_type,
   category,
   page,
   per_page,
   editors_choice = true,
   order,
-}: Partial<ImagesParams> = {}) {
+}: Partial<VideosParams> = {}) {
   const type = useQueryParamsStore((state) => state.type);
   return useInfiniteQuery({
-    queryKey: imageKeys.listWithParams({
+    queryKey: videoKeys.listWithParams({
       query,
-      image_type,
-      orientation,
+      video_type,
       category,
       page,
       per_page,
@@ -27,12 +25,12 @@ export default function useInfiniteImages({
       order,
     }),
     queryFn: ({ pageParam }) =>
-      api.getImages({ query, image_type, orientation, category, ...pageParam, per_page, order }),
+      api.getVideos({ query, video_type, category, ...pageParam, per_page, order }),
     initialPageParam: { page: 1 },
     getNextPageParam: (_, __, firstPageParam) => {
       const { page } = firstPageParam;
       return { page: page + 1 };
     },
-    enabled: type === "image",
+    enabled: type === "video",
   });
 }
