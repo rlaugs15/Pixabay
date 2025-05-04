@@ -1,9 +1,9 @@
 import { create } from "zustand";
 
 interface QueryParamsStore {
-  type: string; // "image" | "video"
+  type: "image" | "video";
   order: "ec" | "latest" | "popular";
-  setType: (value: string) => void;
+  setType: (value: "image" | "video") => void;
   setOrder: (value: "ec" | "latest" | "popular") => void;
   initFromSearchParams: (params: URLSearchParams) => void;
 }
@@ -15,7 +15,7 @@ export const useQueryParamsStore = create<QueryParamsStore>((set) => ({
   setOrder: (value) => set({ order: value }),
   initFromSearchParams: (params) =>
     set({
-      type: params.get("type") ?? "image",
+      type: (params.get("type") as "image" | "video") ?? "image",
       order: (params.get("order") as "ec" | "latest" | "popular") ?? "ec",
     }),
 }));

@@ -1,6 +1,5 @@
 import FillterButton from "@/features/home/components/FillterButton";
-import useInfiniteImages from "@/hooks/queries/useInfiniteImages";
-import useInfiniteVideos from "@/hooks/queries/useInfiniteVideos";
+import useInfiniteContents from "@/hooks/queries/useInfiniteContents";
 import useInfiniteScrollObserver from "@/hooks/useInfiniteScrollObserver";
 import { useQueryParamsStore } from "@/store/queryStore";
 import { useEffect } from "react";
@@ -9,43 +8,13 @@ import { useSearchParams } from "react-router-dom";
 
 export default function Home() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const { order, type, initFromSearchParams, setOrder } = useQueryParamsStore();
+  const { type, initFromSearchParams, setOrder } = useQueryParamsStore();
 
   useEffect(() => {
     initFromSearchParams(searchParams);
   }, [searchParams]);
 
-  const editors_choiceValue = order !== "latest" && order !== "popular";
-  const orderValue = order !== "ec" ? order : undefined;
-  const isVideo = type === "video";
-
-  /* 이미지 패칭 */
-  const {
-    data: iamgesData,
-    fetchNextPage: imagesFetchNextPage,
-    isFetchingNextPage: isImagesFetchingNextPage,
-  } = useInfiniteImages({
-    per_page: 20,
-    page: 3,
-    editors_choice: !editors_choiceValue,
-    order: orderValue,
-  });
-
-  /* 비디오 패칭 */
-  const {
-    data: videosData,
-    fetchNextPage: videosFetchNextPage,
-    isFetchingNextPage: isVideosFetchingNextPage,
-  } = useInfiniteVideos({
-    per_page: 20,
-    page: 3,
-    editors_choice: !editors_choiceValue,
-    order: orderValue,
-  });
-
-  const data = isVideo ? videosData : iamgesData;
-  const fetchNextPage = isVideo ? videosFetchNextPage : imagesFetchNextPage;
-  const isFetchingNextPage = isVideo ? isVideosFetchingNextPage : isImagesFetchingNextPage;
+  const { data, fetchNextPage, isFetchingNextPage } = useInfiniteContents();
 
   const observerRef = useInfiniteScrollObserver(fetchNextPage, isFetchingNextPage);
 
@@ -91,7 +60,7 @@ export default function Home() {
               contents.hits.map((content) => (
                 <img
                   key={content.id}
-                  src={isVideo ? content.videos.tiny.thumbnail : content.webformatURL}
+                  src={type === "video" ? content.videos.tiny.thumbnail : content.webformatURL}
                   alt="썸네일"
                   className="w-full"
                 />

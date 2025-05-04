@@ -1,32 +1,14 @@
+import { Category, ImageType, OrderType } from "./commonApi";
+
 export interface ImagesParams {
   query?: string;
-  image_type?: "all" | "photo" | "illustration" | "vector";
+  image_type?: ImageType;
   orientation?: "all" | "horizontal" | "vertical";
-  category?:
-    | "backgrounds"
-    | "fashion"
-    | "nature"
-    | "science"
-    | "education"
-    | "feelings"
-    | "health"
-    | "people"
-    | "religion"
-    | "places"
-    | "animals"
-    | "industry"
-    | "computer"
-    | "food"
-    | "sports"
-    | "transportation"
-    | "travel"
-    | "buildings"
-    | "business"
-    | "music";
-  page?: number; //기본값 1
-  per_page?: number; //기본값 20
+  category?: Category;
+  page?: number;
+  per_page?: number;
   editors_choice?: boolean;
-  order?: "popular" | "latest";
+  order?: OrderType;
 }
 
 export interface Image {

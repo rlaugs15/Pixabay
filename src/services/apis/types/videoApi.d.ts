@@ -1,31 +1,13 @@
+import { Category, OrderType, VideoType } from "./commonApi";
+
 export interface VideosParams {
   query?: string;
-  video_type?: "all" | "film" | "animation"; //"all", "film" (실사), "animation" (애니메이션)
-  category?:
-    | "backgrounds"
-    | "fashion"
-    | "nature"
-    | "science"
-    | "education"
-    | "feelings"
-    | "health"
-    | "people"
-    | "religion"
-    | "places"
-    | "animals"
-    | "industry"
-    | "computer"
-    | "food"
-    | "sports"
-    | "transportation"
-    | "travel"
-    | "buildings"
-    | "business"
-    | "music";
+  video_type?: VideoType;
+  category?: Category;
   editors_choice?: boolean;
-  order?: "popular" | "latest";
-  page?: number; //페이지 번호
-  per_page?: number; //한 페이지당 결과 수
+  order?: OrderType;
+  page?: number;
+  per_page?: number;
 }
 
 // 비디오 해상도별 정보 타입

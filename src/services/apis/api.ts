@@ -2,66 +2,37 @@ import axios, { AxiosInstance } from "axios";
 import { ImagesParams, ImagesResponse } from "./types/imageApi";
 import { VideosParams, VideosResponse } from "./types/videoApi";
 
-const BASE_URL = "/api/images";
-const VIDEO_BASE_URL = "/api/videos";
 const API_KEY = import.meta.env.VITE_PIXABAY_API_KEY;
 
 class API {
-  private instance: AxiosInstance;
+  private imageInstance: AxiosInstance;
+  private videoInstance: AxiosInstance;
 
   constructor() {
-    this.instance = axios.create({
+    this.imageInstance = axios.create({
+      baseURL: "https://pixabay.com/api/",
       params: {
         key: API_KEY,
+        lang: "ko",
+      },
+    });
+
+    this.videoInstance = axios.create({
+      baseURL: "https://pixabay.com/api/videos/",
+      params: {
+        key: API_KEY,
+        lang: "ko",
       },
     });
   }
 
-  async getImages({
-    query,
-    image_type,
-    orientation,
-    category,
-    page,
-    per_page,
-    editors_choice = true,
-    order,
-  }: ImagesParams): Promise<ImagesResponse> {
-    const res = await this.instance.get(BASE_URL, {
-      params: {
-        q: query,
-        lang: "ko",
-        image_type,
-        orientation,
-        category,
-        page,
-        per_page,
-        editors_choice,
-        order,
-      },
-    });
+  async getImages(params: ImagesParams): Promise<ImagesResponse> {
+    const res = await this.imageInstance.get("", { params });
     return res.data;
   }
 
-  async getVideos({
-    query,
-    video_type,
-    category,
-    editors_choice,
-    page,
-    per_page,
-  }: VideosParams): Promise<VideosResponse> {
-    const res = await this.instance.get(VIDEO_BASE_URL, {
-      params: {
-        q: query,
-        lang: "ko",
-        video_type,
-        category,
-        editors_choice,
-        page,
-        per_page,
-      },
-    });
+  async getVideos(params: VideosParams): Promise<VideosResponse> {
+    const res = await this.videoInstance.get("", { params });
     return res.data;
   }
 }
