@@ -96,7 +96,11 @@ export default function HomeHero() {
         <h1 className="hidden lg:block font-bold text-3xl">놀라운 무료 이미지</h1>
         <section className="w-full text-sm font-semibold flex justify-center">
           {btnTexts.map((text) => (
-            <TypeButton key={text[1]} text={text} setTypeParamsClick={setTypeParamsClick} />
+            <TypeButton
+              key={`${text[0]}-${text[1]}`}
+              text={text}
+              setTypeParamsClick={setTypeParamsClick}
+            />
           ))}
         </section>
         <section className="w-full max-w-205">

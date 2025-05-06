@@ -1,4 +1,5 @@
 import FillterButton from "@/features/home/components/FillterButton";
+import ContentItem from "@/features/home/components/HomeHero/contentItem";
 import useInfiniteContents from "@/hooks/queries/useInfiniteContents";
 import useInfiniteScrollObserver from "@/hooks/useInfiniteScrollObserver";
 import { useQueryParamsStore } from "@/store/queryStore";
@@ -58,11 +59,14 @@ export default function Home() {
           <Masonry gutter="24px">
             {data?.pages.map((contents) =>
               contents.hits.map((content) => (
-                <img
+                <ContentItem
                   key={content.id}
-                  src={type === "video" ? content.videos.tiny.thumbnail : content.webformatURL}
-                  alt="썸네일"
-                  className="w-full"
+                  id={content.id}
+                  isVideo={type === "video"}
+                  thumbnail={
+                    type === "video" ? content.videos.tiny.thumbnail : content.webformatURL
+                  }
+                  videoUrl={content.videos?.small?.url}
                 />
               ))
             )}
