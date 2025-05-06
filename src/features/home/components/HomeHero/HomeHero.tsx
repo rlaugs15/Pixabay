@@ -11,7 +11,7 @@ import Autoplay from "embla-carousel-autoplay";
 import MainHeader from "../MainHeader";
 import { useSearchParams } from "react-router-dom";
 import { useQueryParamsStore } from "@/store/queryStore";
-import TypeButton from "./TypeButton";
+import TypeButton from "./components/TypeButton";
 import {
   btnTexts,
   CATEGORY_MAP,
@@ -20,7 +20,7 @@ import {
   TYPE_MAP,
   VIDEO_TYPE_MAP,
 } from "@/lib/contents";
-import CategoryButton from "./categoryButton";
+import CategoryButton from "./components/CategoryButton";
 
 export default function HomeHero() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -94,7 +94,7 @@ export default function HomeHero() {
       <MainHeader />
       <div className="w-full flex flex-col gap-4 text-white items-center">
         <h1 className="hidden lg:block font-bold text-3xl">놀라운 무료 이미지</h1>
-        <section className="w-full text-sm font-semibold flex justify-center">
+        <section className="w-full text-sm font-semibold flex justify-center flex-wrap">
           {btnTexts.map((text) => (
             <TypeButton
               key={`${text[0]}-${text[1]}`}
@@ -123,7 +123,7 @@ export default function HomeHero() {
             </form>
           </Form>
         </section>
-        <section className="flex gap-1">
+        <section className="flex gap-1 flex-wrap">
           {categoryTexts.map((category) => (
             <CategoryButton
               key={category[0]}

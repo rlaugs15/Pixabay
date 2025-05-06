@@ -1,5 +1,5 @@
 import FillterButton from "@/features/home/components/FillterButton";
-import ContentItem from "@/features/home/components/HomeHero/contentItem";
+import ContentItem from "@/features/home/components/HomeHero/components/ContentItem";
 import useInfiniteContents from "@/hooks/queries/useInfiniteContents";
 import useInfiniteScrollObserver from "@/hooks/useInfiniteScrollObserver";
 import { useQueryParamsStore } from "@/store/queryStore";
