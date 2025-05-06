@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod/src/zod.js";
@@ -13,7 +12,6 @@ import MainHeader from "../MainHeader";
 import { useSearchParams } from "react-router-dom";
 import { useQueryParamsStore } from "@/store/queryStore";
 import TypeButton from "./TypeButton";
-import { Category, ImageType, VideoType } from "@/services/apis/types/commonApi";
 import {
   btnTexts,
   CATEGORY_MAP,
@@ -22,6 +20,7 @@ import {
   TYPE_MAP,
   VIDEO_TYPE_MAP,
 } from "@/lib/contents";
+import CategoryButton from "./categoryButton";
 
 export default function HomeHero() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -97,7 +96,7 @@ export default function HomeHero() {
         <h1 className="hidden lg:block font-bold text-3xl">놀라운 무료 이미지</h1>
         <section className="w-full text-sm font-semibold flex justify-center">
           {btnTexts.map((text) => (
-            <TypeButton key={text} text={text} setTypeParamsClick={setTypeParamsClick} />
+            <TypeButton key={text[1]} text={text} setTypeParamsClick={setTypeParamsClick} />
           ))}
         </section>
         <section className="w-full max-w-205">
@@ -122,15 +121,11 @@ export default function HomeHero() {
         </section>
         <section className="flex gap-1">
           {categoryTexts.map((category) => (
-            <Button
-              onClick={() => setCategoryParamsClick(category)}
-              key={category}
-              variant="ghost"
-              size="sm"
-              className="bg-black/30 backdrop-blur-md"
-            >
-              {category}
-            </Button>
+            <CategoryButton
+              key={category[0]}
+              category={category}
+              setCategoryParamsClick={setCategoryParamsClick}
+            />
           ))}
         </section>
       </div>

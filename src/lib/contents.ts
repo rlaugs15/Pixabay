@@ -1,11 +1,11 @@
 import { Category, ImageType, VideoType } from "@/services/apis/types/commonApi";
 
 export const TYPE_MAP: Record<string, "image" | "video"> = {
-  비디오: "video",
+  둘러보기: "image",
   사진: "image",
   일러스트: "image",
   백터: "image",
-  둘러보기: "image",
+  비디오: "video",
   필름: "video",
   애니메이션: "video",
 };
@@ -37,5 +37,10 @@ export const CATEGORY_MAP: Record<string, Category> = {
   동물: "animals",
 };
 
-export const btnTexts = Object.keys(TYPE_MAP);
-export const categoryTexts = Object.keys(CATEGORY_MAP);
+export const btnTexts = Object.entries(TYPE_MAP);
+export const categoryTexts = Object.entries(CATEGORY_MAP);
+export const MEDIA_TYPE_MAP: Record<string, ImageType | VideoType | undefined> = {
+  ...IMAGE_TYPE_MAP,
+  ...VIDEO_TYPE_MAP,
+};
+export const mediaTypes = Object.entries(MEDIA_TYPE_MAP);
