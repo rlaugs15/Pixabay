@@ -13,42 +13,52 @@ import MainHeader from "../MainHeader";
 import { useSearchParams } from "react-router-dom";
 import { useQueryParamsStore } from "@/store/queryStore";
 import TypeButton from "./TypeButton";
-
-const btnTexts = ["둘러보기", "사진", "일러스트", "백터", "비디오", "음악", "음향 효과", "GIF"];
-const recommWords = [
-  "꽃",
-  "봄",
-  "배경",
-  "벚꽃",
-  "spring",
-  "easter",
-  "ai 생성",
-  "사람",
-  "색칠 공부",
-  "자연",
-  "고양이",
-  "바다",
-  "강아지",
-  "하트",
-];
+import { Category, ImageType, VideoType } from "@/services/apis/types/commonApi";
+import {
+  btnTexts,
+  CATEGORY_MAP,
+  categoryTexts,
+  IMAGE_TYPE_MAP,
+  TYPE_MAP,
+  VIDEO_TYPE_MAP,
+} from "@/lib/contents";
 
 export default function HomeHero() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const setType = useQueryParamsStore((state) => state.setType);
+  const { setType, setImageType, setVideoType, setCategory } = useQueryParamsStore();
 
   const { data: imagesData } = useImages({ per_page: 15 });
 
   const setTypeParamsClick = (value: string) => {
+    const type = TYPE_MAP[value] ?? "image";
+    const imageType = IMAGE_TYPE_MAP[value];
+    const videoType = VIDEO_TYPE_MAP[value];
+
     const newParams = new URLSearchParams(searchParams);
-    if (value === "비디오") {
-      newParams.set("type", "video");
-      setSearchParams(newParams);
-      setType("video");
-    } else {
-      newParams.set("type", "image");
-      setSearchParams(newParams);
-      setType("image");
+    newParams.set("type", type);
+    setType(type);
+
+    if (type === "image" && imageType) {
+      setImageType(imageType);
+      newParams.set("image_type", imageType);
+      newParams.delete("video_type");
     }
+
+    if (type === "video" && videoType) {
+      setVideoType(videoType);
+      newParams.set("video_type", videoType);
+      newParams.delete("image_type");
+    }
+
+    setSearchParams(newParams);
+  };
+
+  const setCategoryParamsClick = (value: string) => {
+    const category = CATEGORY_MAP[value] ?? "";
+    const newParams = new URLSearchParams(searchParams);
+    newParams.set("category", category);
+    setCategory(category);
+    setSearchParams(newParams);
   };
 
   const form = useForm<z.infer<typeof searchSchema>>({
@@ -111,9 +121,15 @@ export default function HomeHero() {
           </Form>
         </section>
         <section className="flex gap-1">
-          {recommWords.map((word) => (
-            <Button key={word} variant="ghost" size="sm" className="bg-black/30 backdrop-blur-md">
-              {word}
+          {categoryTexts.map((category) => (
+            <Button
+              onClick={() => setCategoryParamsClick(category)}
+              key={category}
+              variant="ghost"
+              size="sm"
+              className="bg-black/30 backdrop-blur-md"
+            >
+              {category}
             </Button>
           ))}
         </section>
