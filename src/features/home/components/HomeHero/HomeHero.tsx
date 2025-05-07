@@ -1,14 +1,7 @@
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod/src/zod.js";
-import { searchSchema } from "@/services/schemas/searchSchema";
-import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-
 import useImages from "@/hooks/queries/useImages";
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
-import MainHeader from "../MainHeader";
+import MainHeader from "../../../../components/MainHeader";
 import { useSearchParams } from "react-router-dom";
 import { useQueryParamsStore } from "@/store/queryStore";
 import TypeButton from "./components/TypeButton";
@@ -21,6 +14,7 @@ import {
   VIDEO_TYPE_MAP,
 } from "@/lib/contents";
 import CategoryButton from "./components/CategoryButton";
+import SearchForm from "@/components/form/SearchForm";
 
 export default function HomeHero() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -59,17 +53,6 @@ export default function HomeHero() {
     setCategory(category);
     setSearchParams(newParams);
   };
-
-  const form = useForm<z.infer<typeof searchSchema>>({
-    resolver: zodResolver(searchSchema),
-    defaultValues: {
-      query: "",
-    },
-  });
-
-  const onSearchSubmit = (values: z.infer<typeof searchSchema>) => {
-    console.log("values", values);
-  };
   return (
     <div className="relative p-4 pb-12 lg:pb-28">
       <article className="absolute left-0 top-0 w-full h-full bg-black/80 -z-10">
@@ -104,24 +87,7 @@ export default function HomeHero() {
           ))}
         </section>
         <section className="w-full max-w-205">
-          <Form {...form}>
-            <form
-              onSubmit={form.handleSubmit(onSearchSubmit)}
-              className="bg-black/30 backdrop-blur-md rounded-3xl overflow-hidden"
-            >
-              <FormField
-                control={form.control}
-                name="query"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <Input placeholder="shadcn" {...field} />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-            </form>
-          </Form>
+          <SearchForm />
         </section>
         <section className="flex gap-1 flex-wrap">
           {categoryTexts.map((category) => (

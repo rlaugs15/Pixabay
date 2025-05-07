@@ -1,6 +1,5 @@
-import BellIcon from "@/components/Icons/BellIcon";
 import PixabayLogo from "@/components/logos/MobilePixabayLogo";
-import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { searchSchema } from "@/services/schemas/searchSchema";
@@ -8,8 +7,9 @@ import { zodResolver } from "./../../node_modules/@hookform/resolvers/zod/src/zo
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { BellIcon } from "lucide-react";
 
-export default function MainLayout() {
+export default function SearchLayout() {
   const form = useForm<z.infer<typeof searchSchema>>({
     resolver: zodResolver(searchSchema),
     defaultValues: {
@@ -21,7 +21,9 @@ export default function MainLayout() {
   return (
     <div className="w-screen p-4">
       <header className="w-full flex gap-3 items-center h-10 bg-green-300">
-        <PixabayLogo className="aspect-square h-full" />
+        <Link to={"/"} className="hover:cursor-pointer">
+          <PixabayLogo className="aspect-square h-full" />
+        </Link>
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSearchSubmit)}

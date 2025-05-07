@@ -1,7 +1,7 @@
 import { Category, ImageType, OrderType } from "./commonApi";
 
 export interface ImagesParams {
-  query?: string;
+  q?: string;
   image_type?: ImageType;
   orientation?: "all" | "horizontal" | "vertical";
   category?: Category;

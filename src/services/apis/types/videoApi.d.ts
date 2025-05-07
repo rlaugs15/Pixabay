@@ -1,7 +1,7 @@
 import { Category, OrderType, VideoType } from "./commonApi";
 
 export interface VideosParams {
-  query?: string;
+  q?: string;
   video_type?: VideoType;
   category?: Category;
   editors_choice?: boolean;
