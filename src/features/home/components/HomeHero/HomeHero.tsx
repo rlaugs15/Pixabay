@@ -5,16 +5,10 @@ import MainHeader from "../../../../components/MainHeader";
 import { useSearchParams } from "react-router-dom";
 import { useQueryParamsStore } from "@/store/queryStore";
 import TypeButton from "./components/TypeButton";
-import {
-  btnTexts,
-  CATEGORY_MAP,
-  categoryTexts,
-  IMAGE_TYPE_MAP,
-  TYPE_MAP,
-  VIDEO_TYPE_MAP,
-} from "@/lib/contents";
+import { CATEGORY_MAP, IMAGE_TYPE_MAP, TYPE_MAP, VIDEO_TYPE_MAP } from "@/lib/contents";
 import CategoryButton from "./components/CategoryButton";
 import SearchForm from "@/components/form/SearchForm";
+import { btnTexts, categoryTexts } from "../../lib/contents";
 
 export default function HomeHero() {
   const [searchParams, setSearchParams] = useSearchParams();

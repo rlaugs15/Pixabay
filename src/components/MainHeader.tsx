@@ -16,11 +16,11 @@ export default function MainHeader({ children }: MainHeaderProps) {
     <header className="w-full flex justify-between gap-3 items-center h-10 mb-7">
       <MobilePixabayLogo
         onClick={onLogoClick}
-        className="aspect-square h-full block sm:hidden stroke-white"
+        className="aspect-square h-full block sm:hidden stroke-white hover:cursor-pointer"
       />
       <WebPixabayLogo
         onClick={onLogoClick}
-        className="hidden sm:block sm:h-full sm:p-1 stroke-white"
+        className="hidden sm:block sm:h-full sm:p-1 stroke-white hover:cursor-pointer"
       />
       {children}
     </header>

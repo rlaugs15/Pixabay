@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { mediaTypes } from "@/lib/contents";
+import { mediaTypes } from "@/features/home/lib/contents";
 import { cn } from "@/lib/utils";
 import { useSearchParams } from "react-router-dom";
 
