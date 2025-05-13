@@ -1,11 +1,9 @@
 import FillterButton from "@/features/home/components/FillterButton";
-import ContentItem from "@/features/home/components/HomeHero/components/ContentItem";
-import useInfiniteContents from "@/hooks/queries/useInfiniteContents";
-import useInfiniteScrollObserver from "@/hooks/useInfiniteScrollObserver";
 import { useQueryParamsStore } from "@/store/queryStore";
-import { useEffect } from "react";
-import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
+import { lazy, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
+
+const HomeContent = lazy(() => import("@/features/home/components/HomeContent"));
 
 export default function Home() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -14,10 +12,6 @@ export default function Home() {
   useEffect(() => {
     initFromSearchParams(searchParams);
   }, [searchParams]);
-
-  const { data, fetchNextPage, isFetchingNextPage } = useInfiniteContents();
-
-  const observerRef = useInfiniteScrollObserver(fetchNextPage, isFetchingNextPage);
 
   const setOrderParmasClick = (value: "ec" | "latest" | "popular") => {
     const newParams = new URLSearchParams(searchParams);
@@ -54,26 +48,7 @@ export default function Home() {
         </div>
       </section>
       {/* 콘텐츠 */}
-      <section className="w-full relative">
-        <ResponsiveMasonry columnsCountBreakPoints={{ 0: 1, 768: 2, 1024: 3, 1280: 4 }}>
-          <Masonry gutter="24px">
-            {data?.pages.map((contents) =>
-              contents.hits.map((content) => (
-                <ContentItem
-                  key={content.id}
-                  id={content.id}
-                  isVideo={type === "video"}
-                  thumbnail={
-                    type === "video" ? content.videos.tiny.thumbnail : content.webformatURL
-                  }
-                  videoUrl={content.videos?.small?.url}
-                />
-              ))
-            )}
-          </Masonry>
-        </ResponsiveMasonry>
-        <div ref={observerRef} className="h-[1px]" />
-      </section>
+      <HomeContent type={type} />
     </div>
   );
 }

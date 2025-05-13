@@ -60,6 +60,8 @@ export default function HomeHero() {
                 <img
                   src={image.largeImageURL}
                   alt={`slide-${image.id}`}
+                  loading="eager"
+                  fetchPriority="high"
                   className="w-full h-auto object-cover object-center"
                 />
               </CarouselItem>

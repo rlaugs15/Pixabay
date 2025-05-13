@@ -1,8 +1,13 @@
 import useInfiniteContents from "@/hooks/queries/useInfiniteContents";
 import useInfiniteScrollObserver from "@/hooks/useInfiniteScrollObserver";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
+import ContentItem from "./HomeHero/components/ContentItem";
 
-export default function HomeContent() {
+interface HomeContentProps {
+  type: "image" | "video";
+}
+
+export default function HomeContent({ type }: HomeContentProps) {
   const { data, fetchNextPage, isFetchingNextPage } = useInfiniteContents();
 
   const observerRef = useInfiniteScrollObserver(fetchNextPage, isFetchingNextPage);
@@ -10,9 +15,15 @@ export default function HomeContent() {
     <section className="w-full relative">
       <ResponsiveMasonry columnsCountBreakPoints={{ 0: 1, 768: 2, 1024: 3, 1280: 4 }}>
         <Masonry gutter="24px">
-          {data?.pages.map((images) =>
-            images.hits.map((image) => (
-              <img key={image.id} src={image.webformatURL} alt="사진" className="w-full" />
+          {data?.pages.map((contents) =>
+            contents.hits.map((content) => (
+              <ContentItem
+                key={content.id}
+                id={content.id}
+                isVideo={type === "video"}
+                thumbnail={type === "video" ? content.videos.tiny.thumbnail : content.webformatURL}
+                videoUrl={content.videos?.small?.url}
+              />
             ))
           )}
         </Masonry>
