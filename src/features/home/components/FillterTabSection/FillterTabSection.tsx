@@ -25,18 +25,24 @@ export default function FillterTabSection({
     initFromSearchParams(searchParams);
   }, [searchParams]);
   return (
-    <div className="w-full sm:w-[254px] h-10 flex gap-1 p-1 rounded-[100px] bg-zinc-950/5">
-      <FillterButton
-        fillterValue="ec"
-        text="편집자 선정"
-        setOrderParmasClick={setOrderParmasClick}
-      />
-      <FillterButton
-        fillterValue="latest"
-        text="최신순"
-        setOrderParmasClick={setOrderParmasClick}
-      />
-      <FillterButton fillterValue="popular" text="인기" setOrderParmasClick={setOrderParmasClick} />
-    </div>
+    <section className="flex justify-end">
+      <div className="w-full sm:w-[254px] h-10 flex gap-1 p-1 rounded-[100px] bg-zinc-950/5 my-2">
+        <FillterButton
+          fillterValue="ec"
+          text="편집자 선정"
+          setOrderParmasClick={setOrderParmasClick}
+        />
+        <FillterButton
+          fillterValue="latest"
+          text="최신순"
+          setOrderParmasClick={setOrderParmasClick}
+        />
+        <FillterButton
+          fillterValue="popular"
+          text="인기"
+          setOrderParmasClick={setOrderParmasClick}
+        />
+      </div>
+    </section>
   );
 }
