@@ -2,15 +2,33 @@ import SearchForm from "@/components/form/SearchForm";
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import useImages from "@/hooks/queries/useImages";
 import Autoplay from "embla-carousel-autoplay";
+import { useLayoutEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import MainHeader from "../../../../components/MainHeader";
 import CategorySection from "./components/CategorySection/CategorySection";
 import TypeSection from "./components/TpyeSection/TypeSection";
 
+const prefetchImage = (url: string) => {
+  fetch(url, { mode: "no-cors" }) // 이미지라 CORS 설정 필요 없음
+    .then(() => {
+      console.log("이미지 프리패치 성공", url);
+    })
+    .catch((err) => {
+      console.log("프리패치 실패", err);
+    });
+};
+
 export default function HomeHero() {
   const [searchParams, setSearchParams] = useSearchParams();
   const { data: imagesData } = useImages({ per_page: 15 });
 
+  useLayoutEffect(() => {
+    const firstImageUrl = imagesData?.hits?.[0]?.largeImageURL;
+
+    if (firstImageUrl) {
+      prefetchImage(firstImageUrl); // 첫 이미지 미리 요청
+    }
+  }, [imagesData]);
   return (
     <div className="relative p-4 pb-12 lg:pb-28">
       <article className="absolute left-0 top-0 w-full h-full bg-black/80 -z-10">

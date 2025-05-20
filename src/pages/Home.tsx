@@ -1,9 +1,7 @@
 import FillterTabSection from "@/features/home/components/FillterTabSection/FillterTabSection";
+import HomeContent from "@/features/home/components/HomeContent";
 import { useQueryParamsStore } from "@/store/queryStore";
-import { lazy } from "react";
 import { useSearchParams } from "react-router-dom";
-
-const HomeContent = lazy(() => import("@/features/home/components/HomeContent"));
 
 export default function Home() {
   const [searchParams, setSearchParams] = useSearchParams();

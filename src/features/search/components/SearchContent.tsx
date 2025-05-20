@@ -1,9 +1,9 @@
-import ContentItem from "@/features/home/components/HomeHero/components/ContentItem";
 import useInfiniteContents from "@/hooks/queries/useInfiniteContents";
 import useInfiniteScrollObserver from "@/hooks/useInfiniteScrollObserver";
 import { useQueryParamsStore } from "@/store/queryStore";
-import { useEffect } from "react";
-import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
+import { lazy, useEffect } from "react";
+
+const SearchMasonrySection = lazy(() => import("./SearchMasonrySection"));
 
 interface SearchContentProps {
   query: string;
@@ -22,21 +22,7 @@ export default function SearchContent({ query, searchParams }: SearchContentProp
   }, [searchParams, initFromSearchParams]);
   return (
     <section className="w-full relative">
-      <ResponsiveMasonry columnsCountBreakPoints={{ 0: 1, 768: 2, 1024: 3, 1280: 4 }}>
-        <Masonry gutter="24px">
-          {data?.pages.map((contents) =>
-            contents.hits.map((content) => (
-              <ContentItem
-                key={content.id}
-                id={content.id}
-                isVideo={type === "video"}
-                thumbnail={type === "video" ? content.videos.tiny.thumbnail : content.webformatURL}
-                videoUrl={content.videos?.small?.url}
-              />
-            ))
-          )}
-        </Masonry>
-      </ResponsiveMasonry>
+      <SearchMasonrySection type={type} data={data} />
       <div ref={observerRef} className="h-[1px]" />
     </section>
   );
