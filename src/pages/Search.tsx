@@ -1,10 +1,10 @@
-import SearchForm from "@/components/form/SearchForm";
 import MainHeader from "@/components/MainHeader";
 import SearchComboBox from "@/features/search/components/SearchComboBox";
 import { lazy } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
 
 const SearchContent = lazy(() => import("@/features/search/components/SearchContent"));
+const SearchForm = lazy(() => import("@/components/form/SearchForm"));
 
 export default function Search() {
   const { query } = useParams();

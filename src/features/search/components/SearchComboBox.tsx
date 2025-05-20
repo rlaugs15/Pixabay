@@ -8,13 +8,13 @@ import {
   CommandList,
 } from "@/components/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { useState } from "react";
-import { mediaOptions, SEARCH_IMAGE_TYPE_MAP, SEARCH_VIDEO_TYPE_MAP } from "../lib/content";
-import { Check, ChevronsUpDown } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useQueryParamsStore } from "@/store/queryStore";
 import { ImageType, VideoType } from "@/services/apis/types/commonApi";
+import { useQueryParamsStore } from "@/store/queryStore";
+import { Check, ChevronsUpDown } from "lucide-react";
+import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import { mediaOptions } from "../lib/content";
 
 export default function SearchComboBox() {
   const [open, setOpen] = useState(false);
