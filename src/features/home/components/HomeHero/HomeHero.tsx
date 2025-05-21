@@ -34,7 +34,7 @@ export default function HomeHero() {
       <article className="absolute left-0 top-0 w-full h-full bg-black/80 -z-10">
         <Carousel
           plugins={[Autoplay({ delay: 3000, stopOnInteraction: true })]}
-          className="w-full h-full overflow-hidden"
+          className="w-full h-full aspect-[16/9] overflow-hidden"
         >
           <CarouselContent>
             {imagesData?.hits.map((image) => (
@@ -44,7 +44,7 @@ export default function HomeHero() {
                   alt={`slide-${image.id}`}
                   loading="eager"
                   fetchPriority="high"
-                  className="w-full h-auto object-cover object-center"
+                  className="w-full h-auto aspect-[16/9] object-cover"
                 />
               </CarouselItem>
             ))}

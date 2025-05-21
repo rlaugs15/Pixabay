@@ -1,7 +1,7 @@
 import MainHeader from "@/components/MainHeader";
 import SearchComboBox from "@/features/search/components/SearchComboBox";
 import SearchContent from "@/features/search/components/SearchContent";
-import { lazy } from "react";
+import { lazy, Suspense } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
 
 const SearchForm = lazy(() => import("@/components/form/SearchForm"));
@@ -13,8 +13,10 @@ export default function Search() {
   return (
     <div className="pt-4">
       <MainHeader>
-        <section className="w-full max-w-205">
-          <SearchForm />
+        <section className="w-full max-w-205 min-h-9">
+          <Suspense fallback={<div className="w-full min" />}>
+            <SearchForm />
+          </Suspense>
         </section>
         <div />
       </MainHeader>

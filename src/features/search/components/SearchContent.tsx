@@ -1,7 +1,7 @@
 import useInfiniteContents from "@/hooks/queries/useInfiniteContents";
 import useInfiniteScrollObserver from "@/hooks/useInfiniteScrollObserver";
 import { useQueryParamsStore } from "@/store/queryStore";
-import { lazy, useEffect } from "react";
+import { lazy, Suspense, useEffect } from "react";
 
 const SearchMasonrySection = lazy(() => import("./SearchMasonrySection"));
 
@@ -22,8 +22,10 @@ export default function SearchContent({ query, searchParams }: SearchContentProp
   }, [searchParams, initFromSearchParams]);
   return (
     <section className="w-full relative">
-      <SearchMasonrySection type={type} data={data} />
-      <div ref={observerRef} className="h-[1px]" />
+      <Suspense fallback={<div className="animate-pulse w-full min-h-[500px]" />}>
+        <SearchMasonrySection type={type} data={data} />
+        <div ref={observerRef} className="h-[1px]" />
+      </Suspense>
     </section>
   );
 }
