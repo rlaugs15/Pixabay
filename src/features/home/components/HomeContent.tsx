@@ -16,8 +16,8 @@ export default function HomeContent({ type }: HomeContentProps) {
     <section className="w-full relative">
       <Suspense fallback={<div className="animate-pulse w-full min-h-[500px]" />}>
         <HomeMasonrySection data={data} type={type} />
-        <div ref={observerRef} className="h-[1px]" />
       </Suspense>
+      <div ref={observerRef} className="h-[1px]" />
     </section>
   );
 }

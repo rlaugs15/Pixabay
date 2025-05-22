@@ -2,7 +2,7 @@ import axios, { AxiosInstance } from "axios";
 import { ImagesParams, ImagesResponse } from "./types/imageApi";
 import { VideosParams, VideosResponse } from "./types/videoApi";
 
-const API_KEY = import.meta.env.VITE_PIXABAY_API_KEY;
+export const API_KEY = import.meta.env.VITE_PIXABAY_API_KEY;
 
 class API {
   private imageInstance: AxiosInstance;

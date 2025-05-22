@@ -24,8 +24,8 @@ export default function SearchContent({ query, searchParams }: SearchContentProp
     <section className="w-full relative">
       <Suspense fallback={<div className="animate-pulse w-full min-h-[500px]" />}>
         <SearchMasonrySection type={type} data={data} />
-        <div ref={observerRef} className="h-[1px]" />
       </Suspense>
+      <div ref={observerRef} className="h-[1px]" />
     </section>
   );
 }
