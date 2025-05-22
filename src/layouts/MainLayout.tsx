@@ -16,6 +16,7 @@ export default function MainLayout() {
       queryFn: () => api.getImages({ per_page: 3 }),
     });
   }, []);
+
   return (
     <div className="w-screen">
       {isHomePage && <HomeHero />}

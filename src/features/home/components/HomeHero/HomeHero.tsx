@@ -2,7 +2,7 @@ import SearchForm from "@/components/form/SearchForm";
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import useImages from "@/hooks/queries/useImages";
 import Autoplay from "embla-carousel-autoplay";
-import { Suspense } from "react";
+import { Suspense, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import MainHeader from "../../../../components/MainHeader";
 import CategorySection from "./components/CategorySection/CategorySection";
@@ -11,7 +11,13 @@ import TypeSection from "./components/TpyeSection/TypeSection";
 export default function HomeHero() {
   const [searchParams, setSearchParams] = useSearchParams();
   const { data: imagesData } = useImages({ per_page: 3 });
-
+  /* 이미지를 미리 브라우저 수준에서 다운로드 */
+  useEffect(() => {
+    if (imagesData?.hits[0].largeImageURL) {
+      const preloadImage = new Image();
+      preloadImage.src = imagesData?.hits[0].largeImageURL;
+    }
+  }, [imagesData]);
   return (
     <div className="relative p-4 pb-12 lg:pb-28">
       <article className="absolute left-0 top-0 w-full h-full bg-black/80 -z-10">
@@ -25,10 +31,10 @@ export default function HomeHero() {
                 <CarouselItem key={image.id}>
                   <img
                     src={image.largeImageURL}
-                    alt={`slide-${image.id}`}
+                    alt={`id-${image.id}`}
                     loading="eager"
                     fetchPriority="high"
-                    className="w-full h-auto aspect-[16/9] object-cover"
+                    className="w-full aspect-[16/9] object-cover"
                   />
                 </CarouselItem>
               ))}
