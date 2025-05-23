@@ -1,5 +1,5 @@
+import { Category, ImageType, VideoType } from "@/types/api/common";
 import { create } from "zustand";
-import { Category, ImageType, VideoType } from "../../types/api/common";
 
 interface QueryParamsStore {
   type: "image" | "video";
