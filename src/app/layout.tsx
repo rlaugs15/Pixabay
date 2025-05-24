@@ -1,4 +1,4 @@
-import MainHeader from "@/components/header/MainHeader";
+import MainHeader from "@/components/common/header/MainHeader";
 import { QueryProvider } from "@/Provider";
 import "@/styles/globals.css";
 import type { Metadata } from "next";

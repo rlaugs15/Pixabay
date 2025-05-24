@@ -1,5 +1,5 @@
 import { getImages } from "@/app/actions/image";
-import SearchForm from "@/components/form/SearchForm";
+import SearchForm from "@/components/common/form/SearchForm";
 import CategorySection from "./components/CategorySection/CategorySection";
 import HeroCarousel from "./components/HeroCarousel";
 import TypeSection from "./components/TpyeSection/TypeSection";

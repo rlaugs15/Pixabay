@@ -1,9 +1,9 @@
 "use client";
 
+import MobilePixabayLogo from "@/components/icons/MobilePixabayLogo";
+import WebPixabayLogo from "@/components/icons/WebPixabayLogo";
 import { useRouter } from "next/navigation";
 import { ReactNode } from "react";
-import MobilePixabayLogo from "../icons/MobilePixabayLogo";
-import WebPixabayLogo from "../icons/WebPixabayLogo";
 
 interface MainHeaderProps {
   children?: ReactNode;
