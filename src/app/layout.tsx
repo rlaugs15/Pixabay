@@ -1,3 +1,4 @@
+import MainHeader from "@/components/header/MainHeader";
 import { QueryProvider } from "@/Provider";
 import "@/styles/globals.css";
 import type { Metadata } from "next";
@@ -26,6 +27,7 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased w-full`}>
+        <MainHeader />
         <QueryProvider>{children}</QueryProvider>
       </body>
     </html>
