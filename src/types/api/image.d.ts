@@ -1,12 +1,12 @@
 import { Category, ImageType, OrderType } from "./common";
 
 export interface ImagesParams {
-  q?: string;
+  q?: string; //검색어
   image_type?: ImageType;
-  orientation?: "all" | "horizontal" | "vertical";
+  orientation?: "all" | "horizontal" | "vertical"; //이미지 방향
   category?: Category;
-  page?: number;
-  per_page?: number;
+  page?: number; //페이지 번호=1
+  per_page?: number; //페이지당 결과 수 (3~200)=20
   editors_choice?: boolean;
   order?: OrderType;
 }
