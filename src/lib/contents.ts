@@ -1,4 +1,4 @@
-import { Category, ImageType, VideoType } from "@/services/apis/types/commonApi";
+import { Category, ImageType, VideoType } from "@/types/api/common";
 
 export const TYPE_MAP: Record<string, "image" | "video"> = {
   둘러보기: "image",
@@ -36,3 +36,11 @@ export const CATEGORY_MAP: Record<string, Category> = {
   장소: "places",
   동물: "animals",
 };
+
+export const btnTexts = Object.entries(TYPE_MAP);
+export const categoryTexts = Object.entries(CATEGORY_MAP);
+export const MEDIA_TYPE_MAP: Record<string, ImageType | VideoType | undefined> = {
+  ...IMAGE_TYPE_MAP,
+  ...VIDEO_TYPE_MAP,
+};
+export const mediaTypes = Object.entries(MEDIA_TYPE_MAP);

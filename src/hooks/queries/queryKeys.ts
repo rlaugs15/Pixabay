@@ -1,4 +1,4 @@
-import { ImagesParams } from "@/services/apis/types/imageApi";
+import { ImagesParams } from "@/types/api/image";
 
 export const imageKeys = {
   all: ["images"] as const,
@@ -6,10 +6,3 @@ export const imageKeys = {
   list: () => [...imageKeys.all, "list"] as const,
   listWithParams: (params: ImagesParams) => [...imageKeys.list(), { params }] as const,
 };
-
-/* export const videoKeys = {
-  all: ["videos"] as const,
-
-  list: () => [...videoKeys.all, "list"] as const,
-  listWithParams: (params: VideosParams) => [...videoKeys.list(), { params }] as const,
-}; */

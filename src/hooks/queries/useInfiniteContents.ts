@@ -1,4 +1,5 @@
-import api from "@/services/apis/api";
+import { getImages } from "@/app/actions/image";
+import { getVideos } from "@/app/actions/videos";
 import { useQueryParamsStore } from "@/store/queryStore";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
@@ -27,8 +28,8 @@ export default function useInfiniteContents({ query = "" }: { query?: string } =
     queryFn: ({ pageParam = { page: 1 } }) => {
       const queryParams = createPixabayQueryParams(pageParam.page);
       return type === "video"
-        ? api.getVideos({ ...queryParams, q: query })
-        : api.getImages({ ...queryParams, q: query });
+        ? getVideos({ ...queryParams, q: query })
+        : getImages({ ...queryParams, q: query });
     },
     initialPageParam: { page: 1 },
     getNextPageParam: (_, __, lastPageParam) => {
