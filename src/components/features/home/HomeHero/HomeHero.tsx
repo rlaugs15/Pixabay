@@ -5,7 +5,7 @@ import HeroCarousel from "./components/HeroCarousel";
 import TypeSection from "./components/TpyeSection/TypeSection";
 
 export default async function HomeHero() {
-  const images = await getImages({ per_page: 3 });
+  const images = await getImages({ per_page: 3 }, { revalidate: 3600 });
   return (
     <section className="relative p-4 pb-12 lg:pb-28">
       <article className="absolute left-0 top-0 w-full h-full bg-black/80 -z-10">
