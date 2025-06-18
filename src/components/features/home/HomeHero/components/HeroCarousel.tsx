@@ -20,9 +20,8 @@ export default function HeroCarousel({ images }: HeroCarouselProps) {
           <CarouselItem key={image.id} className="relative w-full h-auto aspect-[16/9]">
             <Image
               src={image.largeImageURL}
-              alt={`id-${image.id}`}
-              loading="eager"
-              fetchPriority="high"
+              alt="배너 이미지"
+              priority
               fill
               className="object-cover"
               sizes="100vw"
