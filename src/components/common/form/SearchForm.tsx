@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { searchSchema } from "@/lib/schemas";
@@ -24,19 +25,21 @@ export default function SearchForm() {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSearchSubmit)}
-          className="bg-black/30 backdrop-blur-md rounded-3xl overflow-hidden"
+          className="bg-white backdrop-blur-md rounded-3xl overflow-hidden flex items-center
+    ring-1 ring-slate-400 focus-within:ring-2 focus-within:ring-slate-500 focus-within:ring-offset-2 transition"
         >
           <FormField
             control={form.control}
             name="query"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="flex-1">
                 <FormControl>
-                  <Input placeholder="검색어를 입력해주세요." {...field} />
+                  <Input placeholder="검색어를 입력해주세요." {...field} className="border-none" />
                 </FormControl>
               </FormItem>
             )}
           />
+          <Button className="rounded-3xl m-0.5">검색</Button>
         </form>
       </Form>
     </section>
