@@ -16,12 +16,12 @@ export default function HeroCarousel({ images }: HeroCarouselProps) {
       className="w-full h-full aspect-[16/9] overflow-hidden"
     >
       <CarouselContent>
-        {images?.hits.map((image) => (
+        {images?.hits.map((image, index) => (
           <CarouselItem key={image.id} className="relative w-full h-auto aspect-[16/9]">
             <Image
               src={image.largeImageURL}
               alt="배너 이미지"
-              priority
+              priority={index === 0} // 첫 번째 이미지에만 priority
               fill
               className="object-cover"
               sizes="100vw"
