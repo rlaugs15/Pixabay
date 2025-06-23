@@ -26,15 +26,7 @@ export default function SearchComboBox() {
 
   const { setImageType, setVideoType, setType } = useQueryParamsStore();
 
-  const setQueryParams = ({
-    value,
-    label,
-    group,
-  }: {
-    value: string;
-    label: string;
-    group: "image" | "video";
-  }) => {
+  const setQueryParams = ({ value, group }: { value: string; group: "image" | "video" }) => {
     const params = new URLSearchParams(searchParams.toString());
 
     if (group === "image") {

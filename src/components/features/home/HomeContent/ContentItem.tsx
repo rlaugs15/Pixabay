@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 
 interface ContentItemProps {
@@ -19,7 +20,14 @@ export default function ContentItem({ isVideo, thumbnail, videoUrl, id }: Conten
       onMouseLeave={() => setIsHovered(false)}
       className="relative w-full"
     >
-      <img src={thumbnail} alt="썸네일" className="w-full" />
+      {/* <img src={thumbnail} alt="썸네일" className="w-full" /> */}
+      <Image
+        src={thumbnail}
+        alt="썸네일"
+        width={400}
+        height={300} // initial layout hint일 뿐, CSS에 의해 무시될 수 있다.
+        className="w-full h-auto object-cover"
+      />
       {isVideo && isHovered && (
         <video
           src={videoUrl}

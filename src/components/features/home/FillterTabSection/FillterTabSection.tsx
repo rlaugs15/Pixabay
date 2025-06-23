@@ -21,7 +21,7 @@ export default function FillterTabSection() {
 
   useEffect(() => {
     initFromSearchParams(searchParams);
-  }, [searchParams]);
+  }, [searchParams, initFromSearchParams]);
   return (
     <section className="flex justify-end w-full px-4">
       <div className="w-full sm:w-[254px] h-10 flex gap-1 p-1 rounded-[100px] bg-zinc-950/5 my-2">

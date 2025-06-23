@@ -4,7 +4,8 @@ export default function useInfiniteScrollObserver(fetchNextPage: () => void, isF
   const observerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    if (!observerRef.current) return;
+    const currentRef = observerRef.current;
+    if (!currentRef) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -17,10 +18,10 @@ export default function useInfiniteScrollObserver(fetchNextPage: () => void, isF
       }
     );
 
-    observer.observe(observerRef.current);
+    observer.observe(currentRef);
 
     return () => {
-      if (observerRef.current) observer.unobserve(observerRef.current);
+      observer.unobserve(currentRef); // cleanup에서 안전하게 사용
     };
   }, [fetchNextPage, isFetching]);
 
