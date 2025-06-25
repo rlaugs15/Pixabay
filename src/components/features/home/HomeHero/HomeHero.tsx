@@ -1,8 +1,11 @@
 import { getImages } from "@/app/actions/image";
 import SearchForm from "@/components/common/form/SearchForm";
+import { Suspense } from "react";
 import CategorySection from "./components/CategorySection/CategorySection";
+import CategorySectionFallback from "./components/CategorySection/CategorySectionFallback";
 import HeroCarousel from "./components/HeroCarousel";
 import TypeSection from "./components/TpyeSection/TypeSection";
+import TypeSectionFallback from "./components/TpyeSection/TypeSectionFallback";
 
 export default async function HomeHero() {
   const images = await getImages({ per_page: 3 }, { revalidate: 3600 });
@@ -14,9 +17,13 @@ export default async function HomeHero() {
       </article>
       <div className="w-full flex flex-col gap-4 text-white items-center">
         <h1 className="hidden lg:block font-bold text-3xl">놀라운 무료 이미지</h1>
-        <TypeSection />
+        <Suspense fallback={<TypeSectionFallback />}>
+          <TypeSection />
+        </Suspense>
         <SearchForm />
-        <CategorySection />
+        <Suspense fallback={<CategorySectionFallback />}>
+          <CategorySection />
+        </Suspense>
       </div>
     </section>
   );
